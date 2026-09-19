@@ -43,6 +43,8 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --font-display: var(--font-fugaz-one);
+  --font-sans: var(--font-work-sans);
 }
 
 :root {
@@ -159,7 +161,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-work-sans), Arial, Helvetica, sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-fugaz-one), Arial, Helvetica, sans-serif;
   }
 
   button, a {

@@ -14,6 +14,8 @@ import {
   X,
 } from 'lucide-react'
 
+const logoImage = '/morchi-logo.png'
+
 const images = {
   hero: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/efren-barahona-LwKymbVpq0I-unsplash-U2Qx4ZYjuu5C44spCJSh1NutBHInn6.jpg',
   blackTee: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/engin-akyurt-sKGxVtKAGx0-unsplash-Z5YLcL9SI0CqvX8Vq5mA23E1CyQdhm.jpg',
@@ -56,7 +58,7 @@ export default function Home() {
       <header className="sticky top-0 z-30 border-b border-black/10 bg-[#f9e6d7]/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-5 lg:px-10">
           <button aria-label="Abrir menú" className="lg:hidden" onClick={() => setMobileMenu(true)}><Menu className="size-5" /></button>
-          <a href="#inicio" className="font-serif text-4xl italic tracking-[-0.08em] lg:text-5xl">Morchi</a>
+          <a href="#inicio" aria-label="Morchi, inicio" className="flex items-center"><img src={logoImage} alt="Morchi" className="size-11 rounded-full object-cover ring-2 ring-[#24635b]/15 lg:size-14" /></a>
           <nav className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.16em] lg:flex">
             {['Novedades', 'Remeras', 'Pantalones', 'Calzado', 'Sale'].map((item) => <button key={item} onClick={() => setCategory(item === 'Remeras' ? 'Remeras' : 'Todo')} className="transition-opacity hover:opacity-50">{item}</button>)}
           </nav>
@@ -70,7 +72,7 @@ export default function Home() {
         </div>
       </header>
 
-      {mobileMenu && <div className="fixed inset-0 z-50 bg-[#f9e6d7] p-6 lg:hidden"><div className="flex items-center justify-between"><span className="font-serif text-4xl italic">Morchi</span><button aria-label="Cerrar menú" onClick={() => setMobileMenu(false)}><X /></button></div><nav className="mt-20 flex flex-col gap-7 text-2xl font-medium">{['Novedades', 'Remeras', 'Pantalones', 'Calzado', 'Sale'].map((item) => <button className="text-left" key={item} onClick={() => { setCategory(item === 'Remeras' ? 'Remeras' : 'Todo'); setMobileMenu(false) }}>{item}</button>)}</nav></div>}
+      {mobileMenu && <div className="fixed inset-0 z-50 bg-[#f9e6d7] p-6 lg:hidden"><div className="flex items-center justify-between"><span className="flex items-center"><img src={logoImage} alt="Morchi" className="size-14 rounded-full object-cover ring-2 ring-[#24635b]/15" /></span><button aria-label="Cerrar menú" onClick={() => setMobileMenu(false)}><X /></button></div><nav className="mt-20 flex flex-col gap-7 text-2xl font-medium">{['Novedades', 'Remeras', 'Pantalones', 'Calzado', 'Sale'].map((item) => <button className="text-left" key={item} onClick={() => { setCategory(item === 'Remeras' ? 'Remeras' : 'Todo'); setMobileMenu(false) }}>{item}</button>)}</nav></div>}
 
       <section id="inicio" className="mx-auto grid max-w-[1400px] gap-5 px-5 pb-14 pt-5 lg:grid-cols-[1.2fr_0.8fr] lg:px-10 lg:pt-8">
         <div className="relative min-h-[520px] overflow-hidden rounded-[2rem] bg-[#d7d2c8] lg:min-h-[650px]"><img src={images.hero} alt="Campaña Morchi con dos modelos" className="absolute inset-0 size-full object-cover object-center grayscale-[20%]" /><div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/5" /><div className="absolute bottom-8 left-7 text-white sm:bottom-12 sm:left-12"><p className="mb-3 text-[10px] uppercase tracking-[0.28em]">Colección 01 — 2025</p><h1 className="max-w-lg text-5xl font-medium leading-[0.92] tracking-[-0.06em] sm:text-7xl">Vestite de lo que sos.</h1><button onClick={() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' })} className="mt-7 rounded-full border border-white px-6 py-3 text-xs uppercase tracking-[0.18em] transition-colors hover:bg-white hover:text-black">Ver colección</button></div></div>
@@ -83,7 +85,7 @@ export default function Home() {
 
       {cartOpen && <div className="fixed inset-0 z-40 bg-black/30" onClick={() => setCartOpen(false)}><aside className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-[#f9e6d7] p-6 shadow-2xl" onClick={(event) => event.stopPropagation()}><div className="flex items-center justify-between border-b border-black/15 pb-5"><h2 className="text-2xl tracking-[-0.04em]">Tu carrito <span className="text-sm text-black/50">({cartCount})</span></h2><button aria-label="Cerrar carrito" onClick={() => setCartOpen(false)}><X /></button></div>{cartCount === 0 ? <div className="flex flex-1 flex-col items-center justify-center text-center"><ShoppingBag className="mb-5 size-8 stroke-1" /><p className="text-sm">Tu carrito está vacío.</p><button onClick={() => setCartOpen(false)} className="mt-6 border-b border-black pb-1 text-xs uppercase tracking-[0.14em]">Seguir comprando</button></div> : <div className="flex flex-1 flex-col"><div className="flex gap-4 border-b border-black/15 py-6"><img src={images.blackTee} alt="Remera Essential" className="size-24 object-cover" /><div className="flex flex-1 flex-col justify-between"><div className="flex justify-between"><div><p className="text-sm">Remera Essential</p><p className="mt-1 text-xs text-black/50">Negro · M</p></div><span className="text-sm">{formatPrice(28900)}</span></div><div className="flex items-center gap-4 text-xs"><button onClick={() => setCartCount(Math.max(0, cartCount - 1))} className="rounded-full border border-black/20 px-2">−</button><span>{cartCount}</span><button onClick={() => setCartCount(cartCount + 1)} className="rounded-full border border-black/20 px-2">+</button></div></div></div><div className="mt-auto border-t border-black/15 pt-5"><div className="flex justify-between text-sm"><span>Subtotal</span><span>{formatPrice(28900 * cartCount)}</span></div><p className="mt-2 text-xs text-black/50">Envío calculado en el checkout.</p><button className="mt-6 w-full rounded-full bg-[#24635b] py-4 text-xs uppercase tracking-[0.16em] text-white">Iniciar compra</button></div></div>}</aside></div>}
 
-      <footer className="border-t border-black/10 px-5 py-8 lg:px-10"><div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-5 text-xs text-black/55 sm:flex-row"><span className="font-serif text-2xl italic text-[#24635b]">Morchi</span><span>Buenos Aires, Argentina · © 2025 Morchi</span><div className="flex gap-5"><a href="#inicio">Instagram</a><a href="#inicio">Contacto</a></div></div></footer>
+      <footer className="border-t border-black/10 px-5 py-8 lg:px-10"><div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-5 text-xs text-black/55 sm:flex-row"><span className="flex items-center"><img src={logoImage} alt="Morchi" className="size-10 rounded-full object-cover ring-2 ring-[#24635b]/15" /></span><span>Buenos Aires, Argentina · © 2025 Morchi</span><div className="flex gap-5"><a href="#inicio">Instagram</a><a href="#inicio">Contacto</a></div></div></footer>
     </main>
   )
 }

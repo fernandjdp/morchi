@@ -1,6 +1,18 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Fugaz_One, Work_Sans } from 'next/font/google'
 import './globals.css'
+
+const fugazOne = Fugaz_One({
+  variable: '--font-fugaz-one',
+  subsets: ['latin'],
+  weight: '400',
+})
+
+const workSans = Work_Sans({
+  variable: '--font-work-sans',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: 'Morchi — Indumentaria esencial',
@@ -40,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased">
+      <body className={`${fugazOne.variable} ${workSans.variable} antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
