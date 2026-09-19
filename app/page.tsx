@@ -22,11 +22,30 @@ const images = {
   campaign: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/791889069_18091651292278334_6567695875891853846_n-E0JdKSfvoNjedSEOj7RdTuzyicDDW3.jpg',
 }
 
+const catalogImages = [
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/anton-k-wibowo-qSjdVbLpJtk-unsplash-CXBZVqZEB8i7SmqEwnoSBQsh78Rrwu.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/engin-akyurt-sKGxVtKAGx0-unsplash-Nht3zzrPuHItHsjEHuW5wolNGhpxoN.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fraser-bell-OuGGanlJrTA-unsplash-q4o2judiuCns10bnfLLSSmm01qN3wv.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/alexey-demidov-lT1QeQmlIyo-unsplash-PPvREw8rJd1Yef2INsdzM5o4EoDWej.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ian-dooley-iGh7qbW9kUM-unsplash-FE5xLgjzk55EXIbPMPalsbfui84evz.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/muhammad-ali-abbas-3IJ1LkJDPJE-unsplash-qkHrJPAE1OVUg8oGG7btlA2oGuUWDe.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/uji-kanggo-gumilang-sMn0sxR8v2E-unsplash-8YqyjtpzhWL2rFBjaIPhpf7AkAXrxG.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mediamodifier-tT6k5S0fvxs-unsplash-pZ8MGzlLxRQCf0VWQH6OspsZdJn3ok.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/roman-manshin-zUhuGSdsyAQ-unsplash-E6ieOTRspZHpZM03UDeE6XXHKC6wtX.jpg',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/josef-holz-CwkjX0zjQYg-unsplash-bKmFy9l14bU5zaKws14qtMXYJbGyUm.jpg',
+]
+
 const products = [
-  { name: 'Remera Essential', category: 'Remeras', price: 28900, tag: 'Nuevo', image: images.blackTee, color: 'Negro' },
-  { name: 'Remera Logo Morchi', category: 'Remeras', price: 32900, tag: 'Más vendido', image: images.hero, color: 'Crudo' },
-  { name: 'Hoodie Studio', category: 'Abrigos', price: 64900, tag: 'Nuevo', image: images.campaign, color: 'Verde' },
-  { name: 'Pantalón Wide Leg', category: 'Pantalones', price: 58900, tag: '', image: images.hero, color: 'Negro' },
+  { name: 'Remera Essential Blanca', category: 'Remeras', price: 28900, tag: 'Nuevo', image: catalogImages[0], color: 'Blanco' },
+  { name: 'Remera Essential Negra', category: 'Remeras', price: 28900, tag: 'Más vendido', image: catalogImages[1], color: 'Negro' },
+  { name: 'Remera Pocket Studio', category: 'Remeras', price: 32900, tag: 'Nuevo', image: catalogImages[2], color: 'Blanco' },
+  { name: 'Remera Gráfica Tarp', category: 'Remeras', price: 34900, tag: '', image: catalogImages[3], color: 'Negro' },
+  { name: 'Camisa Denim Essential', category: 'Abrigos', price: 64900, tag: 'Nuevo', image: catalogImages[4], color: 'Azul' },
+  { name: 'Remera Evening', category: 'Remeras', price: 32900, tag: '', image: catalogImages[5], color: 'Negro' },
+  { name: 'Remera Layer Blanca', category: 'Remeras', price: 28900, tag: '', image: catalogImages[6], color: 'Blanco' },
+  { name: 'Remera Architect', category: 'Remeras', price: 32900, tag: 'Más vendido', image: catalogImages[7], color: 'Crudo' },
+  { name: 'Remera Knot', category: 'Remeras', price: 34900, tag: '', image: catalogImages[8], color: 'Blanco' },
+  { name: 'Remera Morchi Logo', category: 'Remeras', price: 32900, tag: '', image: catalogImages[9], color: 'Blanco' },
 ]
 
 const formatPrice = (price: number) => `$${price.toLocaleString('es-AR')}`
