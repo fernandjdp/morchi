@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Fugaz_One, Work_Sans } from 'next/font/google'
+import { Fugaz_One, Lato, Work_Sans } from 'next/font/google'
 import './globals.css'
 
 const fugazOne = Fugaz_One({
@@ -12,6 +12,12 @@ const fugazOne = Fugaz_One({
 const workSans = Work_Sans({
   variable: '--font-work-sans',
   subsets: ['latin'],
+})
+
+const lato = Lato({
+  variable: '--font-lato',
+  subsets: ['latin'],
+  weight: ['400', '700'],
 })
 
 export const metadata: Metadata = {
@@ -52,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${fugazOne.variable} ${workSans.variable} antialiased`}>
+      <body className={`${fugazOne.variable} ${workSans.variable} ${lato.variable} antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
