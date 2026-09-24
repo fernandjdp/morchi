@@ -7,6 +7,9 @@ import { listProducts } from '@/features/catalog/queries/list-products'
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
-  const [products, cart] = await Promise.all([listProducts(), getCart()])
+  const [products, cart] = await Promise.all([
+    listProducts(),
+    getCart().catch(() => null),
+  ])
   return <Storefront products={products} initialCart={cart} />
 }

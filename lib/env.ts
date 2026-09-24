@@ -16,10 +16,26 @@ function requireEnv(name: string): string {
   return value
 }
 
+function firstConfiguredEnv(...names: string[]): string {
+  for (const name of names) {
+    const value = process.env[name]
+    if (value) return value
+  }
+  return requireEnv(names[0])
+}
+
 export function getPublicSupabaseEnv() {
   return {
-    url: requireEnv('NEXT_PUBLIC_SUPABASE_URL'),
-    publishableKey: requireEnv('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY'),
+    // Supabase integrations may expose either the NEXT_PUBLIC_* names or the
+    // provider names. Support both so the server and browser use the same
+    // connected project in previews and deployments.
+    url: firstConfiguredEnv('NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_URL'),
+    publishableKey: firstConfiguredEnv(
+      'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+      'SUPABASE_PUBLISHABLE_KEY',
+      'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+      'SUPABASE_ANON_KEY',
+    ),
   }
 }
 

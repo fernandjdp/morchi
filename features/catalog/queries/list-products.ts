@@ -62,6 +62,9 @@ export async function listProducts(): Promise<CatalogProduct[]> {
     .order('created_at', { ascending: false })
 
   if (error) {
+    // Allow the storefront shell to render while the connected database schema
+    // is being provisioned or refreshed by Supabase.
+    if (error.code === 'PGRST205') return []
     throw new Error(`No se pudo cargar el catálogo: ${error.message}`)
   }
 
