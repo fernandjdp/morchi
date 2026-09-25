@@ -17,6 +17,29 @@ create table if not exists public.carts (
   constraint carts_owner_present check (user_id is not null or session_token is not null)
 );
 
+-- La tabla puede existir desde specs/base.md, cuya primera versión no incluía
+-- carritos anónimos. CREATE TABLE IF NOT EXISTS no agrega columnas a tablas
+-- existentes, por eso se incorpora explícitamente antes de crear el índice.
+alter table public.carts
+  add column if not exists session_token text;
+
+-- En una tabla preexistente también puede faltar esta constraint. NOT VALID
+-- evita que datos legados impidan el deploy y la aplica a nuevas escrituras;
+-- podrá validarse luego de reconciliar carritos históricos sin propietario.
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'carts_owner_present'
+      and conrelid = 'public.carts'::regclass
+  ) then
+    alter table public.carts
+      add constraint carts_owner_present
+      check (user_id is not null or session_token is not null) not valid;
+  end if;
+end;
+$$;
+
 -- Un solo carrito activo por usuario y por sesión anónima.
 create unique index if not exists carts_user_active_key
   on public.carts (user_id)

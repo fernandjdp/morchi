@@ -17,6 +17,9 @@ se considera fuente de verdad.
 20260924000001_admin_activity.sql       010 Backoffice (auditoría, Storage público de catálogo, ajuste atómico)
 ```
 
+La migración del carrito también agrega `session_token` cuando `carts` ya existe
+desde el esquema base anterior, que no tenía soporte para sesiones anónimas.
+
 ## Base de datos existente
 
 Las migraciones están escritas de forma idempotente (`create table if not
