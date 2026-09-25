@@ -16,6 +16,8 @@ Descomposición del dominio ecommerce en módulos independientes que pueden reco
 | 008 | Envíos | Preparar y seguir el despacho de pedidos | Shipment, tracking y estados logísticos | 004, 005 | planned | [spec.md](specs/008-shipping/spec.md) |
 | 009 | Promociones | Administrar cupones y descuentos | Reglas simples de descuento y su aplicación histórica | 001, 004 | planned | [spec.md](specs/009-promotions/spec.md) |
 
+| 010 | Backoffice | Operar catálogo, inventario y pedidos y consultar métricas de ventas | Experiencia administrativa; las reglas de dominio siguen en sus módulos propietarios | 001, 004, 005, 006, 008 | planned | [spec.md](specs/010-backoffice/spec.md) |
+
 ## Orden sugerido de implementación
 
 1. 001 Catálogo

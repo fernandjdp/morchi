@@ -13,6 +13,8 @@ se considera fuente de verdad.
 20260920000004_orders.sql             004 Pedidos (orders, order_items, order_addresses)
 20260920000005_payments.sql           005 Pagos (payments + idempotencia)
 20260920000006_checkout_functions.sql 004/006 Funciones transaccionales (reserva/venta/liberación)
+20260920000007_cart.sql                 003 Carrito
+20260924000001_admin_activity.sql       010 Backoffice (auditoría, Storage público de catálogo, ajuste atómico)
 ```
 
 ## Base de datos existente
@@ -62,3 +64,9 @@ supabase gen types typescript --linked > types/database.types.ts
   través de `product_variant_availability`.
 - Las funciones de checkout e inventario son `SECURITY DEFINER`, con
   `search_path` fijo, y su `EXECUTE` está restringido a `service_role`.
+- El backoffice exige que un operador autenticado tenga el claim confiable
+  `app_metadata.role = "admin"`. Asigná ese claim únicamente mediante un
+  mecanismo administrativo confiable de Supabase Auth; no uses `user_metadata`
+  ni habilites una ruta pública de autoasignación. Sin el claim, el área queda
+  denegada. La clave `SUPABASE_SECRET_KEY` se usa solo en el servidor y después
+  de verificar la sesión y el rol.

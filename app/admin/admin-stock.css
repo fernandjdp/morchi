@@ -1,0 +1,2 @@
+.admin-stock-form{display:flex;gap:5px;align-items:center}.admin-delta{width:68px}.admin-reason{width:165px}.admin-stock-form .admin-button{padding:9px 10px}
+@media(max-width:680px){.admin-stock-form{min-width:290px}.admin-reason{width:130px}}
