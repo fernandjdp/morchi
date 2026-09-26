@@ -36,6 +36,62 @@ Fuera de este módulo: stock transaccional, checkout, pagos, envíos, diseños y
 
 ## 2. Technical Context
 
+### Integración de carga de imágenes en Supabase Storage
+
+**Estado del plan:** la carga base ya existe en `features/backoffice/actions/products.ts` y usa el
+bucket público `product-images`, rutas `{product-id}/{uuid}.{ext}`, MIME explícito, `upsert: false`
+y caché de un año. El formulario de edición ofrece una previsualización local antes del envío.
+
+#### Flujo objetivo
+
+1. El administrador selecciona JPG, PNG o WebP. El formulario cliente valida MIME y tamaño
+   (máximo 5 MiB) y genera una URL temporal con `URL.createObjectURL` para previsualizar; al
+   cambiar de archivo o desmontar el componente, revoca la URL temporal.
+2. Se muestra nombre/tamaño, texto alternativo y una acción de carga accesible. No se transfiere
+   nada hasta enviar el formulario.
+3. La Server Action vuelve a validar sesión/rol, UUID de producto, tamaño y MIME; genera un UUID
+   nuevo bajo el prefijo del producto; sube con `contentType`, `cacheControl` y `upsert: false`.
+4. Se registra `storage_path` y texto alternativo en `product_images`. Si falla la inserción de
+   metadatos, se elimina el objeto recién cargado para evitar huérfanos.
+5. Se revalidan las rutas de administración para que la galería muestre el objeto persistido.
+
+#### Etapas de integración
+
+- **A. Experiencia y validación de entrada (implementada):** preview local previa a la carga,
+  MIME permitido y límite de 5 MiB visibles en el formulario; la validación cliente solo mejora
+  la experiencia y no sustituye controles server-side.
+- **B. Persistencia y seguridad (base implementada):** mantener el bucket `product-images`, las
+  rutas por producto con UUID, MIME explícito, `upsert: false`, autorización de administrador y
+  compensación al fallar la escritura de metadatos. Confirmar en integración que bucket/policies
+  limitan la escritura a la ruta administrativa y permiten lectura pública solo según el diseño
+  de catálogo.
+- **C. Optimización de medios (siguiente iteración):** medir imágenes habituales; si el peso real
+  justifica el costo, agregar compresión/redimensionamiento en cliente con una dependencia evaluada
+  y límites de dimensiones, conservando el MIME real del archivo resultante. Evaluar Supabase Image
+  Transformations para servir variantes optimizadas; no persistir URLs firmadas ni derivados como
+  fuente de verdad. Mantener el original en Storage salvo decisión funcional explícita.
+- **D. Calidad y observabilidad:** cubrir validación permitida/denegada, preview/revocación y
+  rollback de objeto si falla el registro; informar errores sin exponer detalles del proveedor.
+
+#### Decisiones y límites
+
+- El navegador genera solo una URL de previsualización local; no sube directamente ni recibe claves
+  privilegiadas. La Server Action existente conserva autenticación y escritura con cliente admin.
+- El UUID evita colisiones y permite caché larga e inmutable por objeto. Cambios de imagen crean
+  otro path, por lo que el CDN no sirve contenido anterior bajo la misma URL.
+- Se conserva el tope actual de 5 MiB y los formatos JPG/PNG/WebP. La compresión automática y las
+  transformaciones de entrega quedan planificadas, no se incorporan sin medir calidad y tamaño.
+- La tabla `product_images` guarda metadatos/referencia, nunca bytes. El bucket debe permanecer
+  versionado por migraciones y su política debe corresponder al acceso administrativo.
+
+#### Constitución / arquitectura
+
+Cumple server-first con un Client Component pequeño para `File`, estado y APIs del navegador;
+la mutación continúa en servidor con autorización propia (§II, §IV). Los archivos permanecen en
+Storage, con ruta segura, límites de tamaño/tipo y metadatos en PostgreSQL (§III, §IV). La preview
+usa controles etiquetados y mensajes de validación accesibles (§VII). El plan sigue la FR-011 de
+`spec.md`; no agrega cambios de esquema ni secretos en cliente.
+
 ### Lenguaje y runtime
 
 - **TypeScript** obligatorio (strict) sobre **Next.js App Router** (`next@16`, React 19).
