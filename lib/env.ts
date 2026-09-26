@@ -41,7 +41,7 @@ export function getPublicSupabaseEnv() {
 
 export function getServerSupabaseEnv() {
   return {
-    secretKey: requireEnv('SUPABASE_SECRET_KEY'),
+    secretKey: firstConfiguredEnv('SUPABASE_SECRET_KEY', 'SUPABASE_SERVICE_ROLE_KEY'),
   }
 }
 
