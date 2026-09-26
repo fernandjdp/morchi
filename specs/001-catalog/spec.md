@@ -77,6 +77,9 @@ Acceptance Scenarios:
 - FR-008: System MUST allow products to be archived without deleting the references required by historical orders.
 - FR-009: System MUST prevent inactive variants from being added to a purchase.
 - FR-010: System MUST expose only published product information to unauthenticated shoppers.
+- FR-011: Before uploading a product image, the admin interface MUST show a local preview and
+  validate the supported image type and size. The server MUST remain authoritative for validation,
+  and stored images MUST use unique product-scoped paths with their MIME type recorded.
 
 ### Key Entities
 

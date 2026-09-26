@@ -104,6 +104,19 @@ Convenciones:
 
 ---
 
+## Integración de carga de imágenes a Supabase Storage
+
+La implementación se guía por “Integración de carga de imágenes en Supabase Storage” en
+[`plan.md`](./plan.md). T060 ya se completó en esta entrega; el resto delimita la integración y
+validación que queda para cerrar esa capacidad.
+
+- [x] **T060** [P] Añadir previsualización local previa al envío, feedback accesible para formato/tamaño y liberación de URL temporal en el formulario de edición de producto. (FR-011)
+- [ ] **T061** Verificar en entorno Supabase aislado creación del bucket y policies: lectura pública según el catálogo y escritura no disponible para usuarios no autorizados. (§III, §IV)
+- [ ] **T062** Cubrir en tests del formulario los tipos permitidos/denegados, límite de 5 MiB, reemplazo de selección y limpieza de preview URL. (FR-011, §V)
+- [ ] **T063** Cubrir subida en integración: ruta bajo ID de producto con UUID, MIME y `upsert: false`; rechazo server-side de entrada inválida y eliminación del objeto al fallar el registro en `product_images`. (FR-011, §III, §IV)
+- [ ] **T064** Medir imágenes reales de administración y decidir si se incorpora compresión/redimensionamiento cliente o Image Transformations; registrar límites y conservar original como referencia canónica. (Plan §2)
+- [ ] **T065** Revisar manejo accesible de error de carga y revalidación de la galería tras subida exitosa. (§VII)
+
 ## Trazabilidad FR/SC → tareas
 
 | Requisito | Tareas |
