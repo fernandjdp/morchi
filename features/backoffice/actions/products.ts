@@ -91,7 +91,13 @@ export async function uploadProductImage(formData: FormData) {
   if (!ext) redirect(`/admin/productos/${productId}?error=image`)
   const supabase = createAdminClient()
   const path = `${productId}/${crypto.randomUUID()}.${ext}`
-  const {error:uploadError} = await supabase.storage.from('product-images').upload(path,file,{contentType:file.type,upsert:false})
+  const { error: uploadError } = await supabase.storage
+    .from('product-images')
+    .upload(path, file, {
+      contentType: file.type,
+      cacheControl: '31536000',
+      upsert: false,
+    })
   if(uploadError) redirect(`/admin/productos/${productId}?error=image`)
   const {error:rowError} = await supabase.from('product_images').insert({product_id:productId,storage_path:path,alt_text:altText||null})
   if(rowError){await supabase.storage.from('product-images').remove([path]);redirect(`/admin/productos/${productId}?error=image`)}
