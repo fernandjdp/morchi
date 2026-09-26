@@ -116,7 +116,7 @@ export function Storefront({
           <nav className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.16em] lg:flex">
             {['Novedades', 'Remeras', 'Pantalones', 'Calzado', 'Sale'].map((item) => <button key={item} onClick={() => setCategory(item === 'Remeras' ? 'Remeras' : 'Todo')} className="transition-opacity hover:opacity-50">{item}</button>)}
           </nav>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4" suppressHydrationWarning>
             <div className="hidden items-center gap-2 border-b border-black/40 pb-1 md:flex">
               <Search className="size-4" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar" className="w-24 bg-transparent text-xs outline-none placeholder:text-black/50" aria-label="Buscar productos" />
             </div>
